@@ -1,0 +1,91 @@
+{% extends "todo/base.html" %}
+{% block title %}Delete list{% endblock %}
+
+{% block content %}
+
+ <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Dashboard</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+
+                                   {% if user.is_staff %}
+  <h1>Delete entire list: {{ task_list.name }} ?</h1>
+
+  <p>Category tally:</p>
+
+  <ul>
+    <li>Incomplete: {{ task_count_undone }} </li>
+    <li>Complete: {{ task_count_done }} </li>
+    <li>
+      <strong>Total: {{ task_count_total }}</strong>
+    </li>
+  </ul>
+
+  <p> ... all of which will be irretrievably
+    <strong>blown away</strong>. Are you sure you want to do that?</p>
+
+  <form action="" method="post" accept-charset="utf-8">
+    {% csrf_token %}
+    <input type="hidden" name="task_list" value="{{ task_list.id }}">
+    <p>
+      <a href="{% url 'todo:list_detail' task_list.id task_list.slug %}" class="btn btn-success">Return to list: {{ task_list.name }}</a>
+      <input type="submit" name="delete-confirm" value="Do it! &rarr;" class="btn btn-danger">
+    </p>
+  </form>
+
+
+{% else %}
+  <p>Sorry, you don't have permission to delete lists. Please contact your group administrator.</p>
+{% endif %} 
+                                  
+                                   
+                                </div>
+
+
+                            </div>
+                            <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                        
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="year-calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+
+        </div>
+        <!-- End Page wrapper  -->
+
+ 
+{% endblock %}

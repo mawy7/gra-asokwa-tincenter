@@ -1,0 +1,87 @@
+{% extends "todo/base.html" %}
+{% block page_heading %}{% endblock %}
+{% block title %}Add Todo List{% endblock %}
+{% block content %}
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Task</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li><a href="/todo">Task</a></li>
+                                    <li class="active">Add Todo List</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+
+
+
+
+        <div class="content">
+            <div class="animated fadeIn">
+            <!--  Traffic  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card"> 
+                        <div class="card-header">
+                                <strong class="card-title">Add Todo List</strong>
+                            </div>
+                        <div class="row"> 
+                            <div class="col-lg-8" align="center">
+                                <div class="card col-lg-7">   <br><br>                         
+                                      <form action="" method="post">
+                                        {% csrf_token %}
+
+                                        <div class="form-group">
+                                          <label for="id_name">List Name</label>
+                                          <input type="text" class="form-control" id="id_name" name="name" aria-describedby="inputNameHelp" placeholder="">
+                                          <small id="inputNameHelp" class="form-text text-muted">The full display name for this list.</small>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="id_group">Group</label>
+                                          {{form.group}}
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                      </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card-body">  
+                                    <!-- <h4 class="box-title">Chandler</h4> -->
+                                    <div class="calender-cont widget-calender">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- /.row --> 
+                        <div class="card-body"></div>
+                    </div> 
+                </div><!-- /# column -->
+            </div>
+            <!--  Traffic  End -->
+        </div>
+    </div>
+
+
+
+  
+{% endblock %}

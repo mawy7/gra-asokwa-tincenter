@@ -1,0 +1,66 @@
+{% extends "base2.html" %}
+{% load crispy_forms_tags i18n %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Profile Update | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Update your Profile  {% firstof user.get_short_name user.get_username %}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Update Profile</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="col-md-10 indent"><br>
+                                <a href="/accounts/password/change/"><button type="button" class="btn-sm btn-warning"><i class="fa fa-tasks"></i>&nbsp; Change Password</button></a>
+                                 <a href="/accounts/password/change/"><button type="button" class="btn-sm btn-warning"><i class="fa fa-tasks"></i>&nbsp; Change Password</button></a><br><br><br>
+                                                    <form action="{% url 'profiles:create_profile' %}" enctype='multipart/form-data' method='Post'>{% csrf_token %}
+                                                      <div>
+                                                        {% crispy form form.helper %}
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                
+
+                            </div>
+                            <!-- /# card -->
+
+                        </div>
+                        <!-- /# column -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+{% endblock %}

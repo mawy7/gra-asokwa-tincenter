@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png">
+   <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+
+
+    <link href="{% static 'css/calendar2/semantic.ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/calendar2/pignose.calendar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/helper.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+    <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js' %}"></script>
+    <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js' %}"></script>
+<![endif]-->
+{% block extrahead %}
+    <!-- CSS and JavaScripts for django-todo -->
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/css/styles.css' %}" />
+{% endblock extrahead %}
+</head>
+
+<body class="fix-header fix-sidebar">
+    <!-- Preloader - style you can find in spinners.css -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- Main wrapper  -->
+    <div id="main-wrapper">
+        <!-- header header  -->
+        <div class="header">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- Logo -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <!-- Logo text -->
+                        <span><img src="{% static 'images/logo-text1.png' %}" alt="" class="dark-logo" /></span>
+                    </a>
+                </div>
+                <!-- End Logo -->
+                <div class="navbar-collapse">
+                    <!-- toggle and nav items -->
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                       
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <!-- User profile and search -->
+                    <ul class="navbar-nav my-lg-0">
+
+                        <!-- Comment -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-bell"></i>
+                                <div class="notify"> <span class="heartbit {{ task_count }}"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated zoomIn">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            <a href="#">
+                                            
+                                            
+                                            
+                                                <div class="btn btn-primary btn-circle m-r-10"><i class="ti-user"></i></div>
+                                                <div class="mail-contnet">
+                                                    <ul class="list-group mb-4">
+
+                                                     {% regroup lists by group as section_list %}
+                                                      {% for group in section_list %}
+                                                        <ul class="list-group mb-4">
+                                                          {% for task in group.list %}
+                                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <a href="{% url 'todo:list_detail' task.id task.slug %}">{{ task.name }}</a>
+                                                            <span class="badge badge-primary badge-pill">{{ task.task_set.count }}</span>
+                                                          </li>
+                                                          {% endfor %}
+                                                        </ul>
+                                                      {% endfor %}
+
+                                                    </ul>
+                                                        </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- End Comment -->
+                        <!-- Profile -->
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'images/users/5.jpg' %}" alt="user" class="profile-pic" />{% firstof user.get_short_name user.get_username %}</a>
+                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+                                <ul class="dropdown-user">
+                                    <li><a href="{% url 'profiles:profile_home' %}"><i class="ti-user"></i> Profile</a></li>
+                                    <li><a href="{% url 'auth_logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'auth_login' %}" class="btn btn-sm btn-success">LOGIN | SIGNUP</a></li>
+
+                            {% endif %}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- End header header -->
+        {% if user.is_authenticated %}
+        <!-- Left Sidebar  -->
+        <div class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-devider"></li>
+                        <li class="nav-label">Home</li>
+                        <li><a href="/"><i class="fa fa-tachometer"></i>Dashboard</a></li>
+                        <li class="nav-devider"></li>
+                        <li class="nav-label">Entries</li>
+                        <li><a href="/entry/submit_entry"><i class="fa  fa-edit "></i>New Entry</a></li>
+                        <li><a href="/entry/entries"><i class="fa fa-table"></i>View Entries</a></li>
+                        <li class="nav-devider"></li>
+                        <li class="nav-label">Others</li>
+                        <li><a href="/dispatch"><i class="fa  fa-folder-open "></i>Dispatch</a></li>
+                        <li><a href="{% url 'todo:mine' %}"><i class="fa  fa-bullhorn "></i>My Tasks</a></li>
+                        <li><a href="/summary"><i class="fa  fa-binoculars "></i>Summary</a></li>
+                        {% if user.is_superuser %}
+                        <li class="nav-label">Admin</li>
+                        <li><a href="{% url 'todo:lists' %}"><i class="fa  fa-bullhorn "></i>Assign</a></li>
+                        <li><a href="/approve"><i class="fa  fa-handshake-o "></i>Approve</a></li>
+                         <li><a href="/tinadmin/register"><i class="fa  fa-user-plus "></i>Add New User</a></li>
+                         {% endif %}
+
+
+
+
+
+                        
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </div>
+        <!-- End Left Sidebar  -->
+        {% else %}
+         
+        {% endif %}
+
+        <font color="black">
+
+                <!-- Nav tabs -->
+                {% block content %}
+
+                {% endblock %}
+
+
+            <!-- footer -->
+            <footer class="footer"> GRA TIN-CENTER ASOKWA © 2018 All rights reserved. designed by <a href="https://twitter.com/mawy_7" target="/">mawy_7</a></footer>
+            <!-- End footer -->
+
+
+
+
+        </font>
+        
+        </div>
+        <!-- End Page wrapper  -->
+    </div>
+    <!-- End Wrapper -->
+    <!-- All Jquery -->
+
+
+    <script src="{% static 'js/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'js/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+    <!--Menu sidebar -->
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <!--stickey kit -->
+    <script src="{% static 'js/sticky-kit-master/dist/sticky-kit.min.js' %}"></script>
+    <!--Custom JavaScript -->
+
+
+    <!-- Amchart -->
+     <script src="{% static 'js/morris-chart/raphael-min.js' %}"></script>
+    <script src="{% static 'js/morris-chart/morris.js' %}"></script>
+    <script src="{% static 'js/morris-chart/dashboard1-init.js' %}"></script>
+
+
+    <script src="{% static 'js/calendar-2/moment.latest.min.js' %}"></script>
+    <!-- scripit init-->
+    <script src="{% static 'js/calendar-2/semantic.ui.min.js' %}"></script>
+    <!-- scripit init-->
+    <script src="{% static 'js/calendar-2/prism.min.js' %}"></script>
+    <!-- scripit init-->
+    <script src="{% static 'js/calendar-2/pignose.calendar.min.js' %}"></script>
+    <!-- scripit init-->
+    <script src="{% static 'js/calendar-2/pignose.init.js' %}"></script>
+
+    <script src="{% static 'js/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/owl-carousel/owl.carousel-init.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <!-- scripit init-->
+
+    
+    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'js/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables-init.js' %}"></script>
+
+    <script src="{% static 'js/custom.min.js' %}"></script>
+
+
+<script type="text/javascript">
+function showEditPopup(url) {
+    var win = window.open(url, "Edit", 
+        'height=500,width=800,resizable=yes,scrollbars=yes');
+    return false;
+}
+function showAddPopup(triggeringLink) {
+    var name = triggeringLink.id.replace(/^add_/, '');
+    href = triggeringLink.href;
+    var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+    win.focus();
+    return false;
+}
+function closePopup(win, newID, newRepr, id) {
+    $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+    win.close();
+}
+
+</script>
+
+</body>
+
+</html>

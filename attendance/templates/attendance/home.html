@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Home | TIN-CENTER ASOKWA" %}{% endif %} {% endblock %}
+
+
+{% block content %}
+
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Home</h3> </div>
+               
+            </div>
+                    <div class="col-lg-9">
+                                <div class="card-content">
+                                    {% if messages %}
+                                    <div class="alert alert-primary alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                       
+ 
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                   
+
+
+
+
+
+                                    </div> {% endif %}
+                                </div>
+                    </div>
+                        <!-- /# card -->
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row" align="center">
+                    <div class="col-lg-9">
+                        <div class="row">
+                        <div class="col-lg-11">
+                            <div class="card">
+                                <div class="card-title">
+                                   <div class="jumbotron">
+                                      <div class="container">
+                                        {% if user.is_staff %}
+                                        <h1>Hello, {{ user.first_name }}!</h1>
+                                        <p>You are an administrator of the following organizations:</p>
+                                        <p>
+                                        {% for organization in admin_orgs %}
+                                          {{ organization }}
+                                        {% endfor %}
+                                        </p>
+                                      {% else %}
+                                        <h1>Hello!</h1>
+                                      {% endif %}
+                                      </div>
+                                    </div>
+
+
+                                    <div class="table-responsive" style="width: 100%; overflow: auto;">
+                                      <table class="table table-striped table-hover table-condensed">
+                                        <thead>
+                                          <tr>
+                                            
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                        
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="year-calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+
+        </div>
+        <!-- End Page wrapper  -->
+
+{% endblock %}
+

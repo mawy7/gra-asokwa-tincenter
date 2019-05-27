@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static scheduletags i18n %}
+{% block content %}
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Home</h3> </div>
+               
+            </div>
+                    <div class="col-lg-9">
+                                <div class="card-content">
+                                    {% if messages %}
+                                    <div class="alert alert-primary alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                       
+ 
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                   
+
+
+
+
+
+                                    </div> {% endif %}
+                                </div>
+                    </div>
+                        <!-- /# card -->
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row" align="center">
+                    <div class="col-lg-9">
+                        <div class="row">
+                        <div class="col-lg-15">
+                            <div class="card">
+                                <div class="card-title">
+
+{% include "schedule/_dialogs.html" %}
+<div class="row row-centered">
+  <div class="calendarname">{{ calendar.name }}</div>
+  {% prevnext "month_calendar" calendar period "F Y"%}
+  <div class="now row-centered">
+    <a href="{% url "month_calendar" calendar.slug %}">
+      {% trans "This month" %}
+    </a>
+  </div>
+  <div class="center span7">
+    {% month_table calendar period "regular" %}
+  </div>
+</div>
+<div class="row row-centered">
+  <a href="{% url "tri_month_calendar" calendar.slug %}{% querystring_for_date period.start 2 %}">
+    {% trans "Three Month Calendar" %}
+  </a>
+  <a href="{% url "year_calendar" calendar.slug %}{% querystring_for_date period.start 1 %}">
+    {% trans "Full Year Calendar" %}
+  </a>
+</div>
+       
+                                </div>
+
+
+                            </div>
+                            <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                        
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+
+        </div>
+        <!-- End Page wrapper  -->
+{% endblock %}
+

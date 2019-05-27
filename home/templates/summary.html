@@ -1,0 +1,63 @@
+{% extends "base2.html" %}
+{% load i18n  static %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans " Entries | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Summary</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Summary</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Hey there! {% firstof user.get_short_name user.get_username %}</strong>
+                            </div>
+                            <div class="card-body">
+                                    <h5>Watch out for this Space, Summary would be added soon. <br> This would include you Attendance Report ;)</h5>
+                                                     <br><a href="/"><button type="button" class="btn btn-info btn-xs m-b-10 m-l-5">Go Back Home
+                                                     </button></a> 
+                                                    <br>
+
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+{% endblock %}
+
+

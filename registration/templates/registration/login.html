@@ -1,0 +1,40 @@
+{% extends "registration/log_base.html" %}
+
+{% load i18n static crispy_forms_tags %}
+
+
+
+{% block content %}
+ 
+
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+               
+                <div class="login-form">
+                     <form class="form col-md-9"  margin="auto" method="post" action="">
+                         <div class="login-logo">
+                    <a href="/">
+                        <img src="{% static 'images/logo-text1.png' %}" alt=""/>
+                    </a>
+                </div>
+                                                    {% csrf_token %}
+                                                    <div class="row col-md-12">
+                                                        <div class="form-group">
+                                                           <div class="row"> {{ form|crispy }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <button type="submit" class="btn btn-success btn-lg" value="{% trans 'Log in' %}">Login</button>
+                                                        </div><strong>
+
+                                                    </div>
+                                                    </div>
+                                                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+               
+{% endblock %}

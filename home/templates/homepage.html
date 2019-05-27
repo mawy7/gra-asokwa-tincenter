@@ -1,0 +1,186 @@
+{% extends "base2.html" %}
+{% load i18n static %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Home | TIN-CENTER ASOKWA" %}{% endif %} {% endblock %}
+
+
+{% block content %}
+
+
+ {% if user.is_authenticated %}
+        <div class="content pb-0">
+
+            <!-- Widgets  -->
+            <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-notepad text-warning border-warning"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">No of Task</div>
+                                        <div class="stat-digit count">{{ countT }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-write text-primary border-primary"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Entries</div>
+                                        <div class="stat-digit count">{{ countE }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-agenda text-success border-success"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Dispatched</div>
+                                        <div class="stat-digit count">{{ countD }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-home text-danger border-danger"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Organizations</div>
+                                        <div class="stat-digit count">{{ countO }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div> 
+            <!-- Widgets End -->
+ {% endif %}
+
+            <!--  Traffic  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card"> 
+                        <div class="row"> 
+                            <div class="col-lg-8" align="center">
+                                <div class="card">
+                                    {% if user.is_authenticated %}
+                                    {% now "H" as current_time %}
+
+                                    {% if current_time|add:"0" > 12 %}
+                                        <h5><b>Hope your day is going well {% firstof user.get_short_name user.get_username %}? have a lovely afternoon</b></h5>
+                                    {% elif current_time|add:"0" < 12 %}
+                                        <h5><b>Good Morning {% firstof user.get_full_name user.get_username %}! nice having you here today :)</b></h5>
+                                    {% elif current_time|add:"0" > 15 %}
+                                        <h5><b>Almost done for the day {% firstof user.get_short_name user.get_username %}, finish hard!</b></h5>
+                                    {% endif %}
+                                     {% endif %}
+                                    <img class="card-img-top" src="{% static 'images/graw.jpg' %}" alt="Card image cap">
+                                     {% if user.is_authenticated %}
+                                    <div class="card-body">
+                                        <a href="/entry/submit_entry"><button  href="{% url 'auth_login' %}" type="button" class="btn-sm btn-primary"><i class="fa fa-folder-open"></i>&nbsp; New Entry</button></a>
+                                    <a href="/entry/entries"><button type="button" class="btn-sm btn-secondary"><i class="fa fa-list-alt"></i>&nbsp; Entries</button></a>
+                                    <a href="/entry/new_dispatch"><button type="button" class="btn-sm btn-success"><i class="fa fa-edit"></i>&nbsp; Dispatch</button></a>
+                                    <a href="/todo/mine"><button type="button" class="btn-sm btn-warning"><i class="fa fa-tasks"></i>&nbsp; My Task</button></a>
+                                   {% if user.is_superuser %}
+                                    <a href="/todo"><button type="button" class="btn-sm btn-danger"><i class="fa fa-share"></i>&nbsp; Assign</button></a>
+                                    <a href="#"><button type="button" class="btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp; Approve</button></a>
+                                    {% endif %}
+                                    </div>
+                                     {% else %}
+                                     <div>
+                                           <a href="{% url 'auth_login' %}" class="btn btn-md btn-primary">LOGIN HERE</a>
+                                     </div>
+                      
+                                      {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card-body">  
+                                    <!-- <h4 class="box-title">Chandler</h4> -->
+                                    <div class="calender-cont widget-calender">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- /.row --> 
+                        <div class="card-body"></div>
+                    </div> 
+                </div><!-- /# column -->
+            </div>
+            <!--  Traffic  End -->
+
+
+
+            <div class="modal fade none-border" id="event-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><strong>Add New Event</strong></h4>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
+                            <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Add Category -->
+            <div class="modal fade none-border" id="add-category">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><strong>Add a category </strong></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label">Category Name</label>
+                                        <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Choose Category Color</label>
+                                        <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
+                                            <option value="success">Success</option>
+                                            <option value="danger">Danger</option>
+                                            <option value="info">Info</option>
+                                            <option value="pink">Pink</option>
+                                            <option value="primary">Primary</option>
+                                            <option value="warning">Warning</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MODAL -->
+
+        </div> <!-- .content -->
+
+{% endblock %}

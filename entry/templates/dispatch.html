@@ -1,0 +1,58 @@
+{% extends "base2.html" %}
+{% load static crispy_forms_tags i18n %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans " Dispatch | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>New Dispatch</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li><a href="/entry/submit_entry">Dispatch</a></li>
+                                    <li class="active">New</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">New Dispatch</strong>
+                            </div>
+                            <div class="card-body">
+                                   
+                                <form action="{% url 'entry:submit_dispatch' %}" enctype='multipart/form-data' method='Post'>{% csrf_token %}
+                                                  {% crispy form form.helper %}
+                                            </form>
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+

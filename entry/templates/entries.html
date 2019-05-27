@@ -1,0 +1,63 @@
+{% extends "base2.html" %}
+{% load i18n  static %}
+{% load render_table from django_tables2 %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans " Entries Records | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Entries</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li><a href="/entry/submit_entry">New Entry</a></li>
+                                    <li class="active">Entries table</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+                    <!-- Container fluid  -->
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Entries</strong>
+                            </div>
+                            <div class="card-body">
+                                                {% render_table table %}{% load django_tables2 %}
+                                                <br><br>
+                                            	{% for format in table.export_formats %}
+												    <a href="{% export_url format %}">
+												        download  <code>.{{ format }}</code>
+												    </a>
+												{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+
+{% endblock %}

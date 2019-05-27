@@ -1,0 +1,63 @@
+{% extends "base2.html" %}
+{% load i18n  static %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans " Entries | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Entries</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li><a href="/entry/submit_entry">Entry</a></li>
+                                    <li class="active">Entries Success</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Hey there! {% firstof user.get_short_name user.get_username %}</strong>
+                            </div>
+                            <div class="card-body">
+                                    <h5>Your entry submission was successful.</h5>
+                                                     <br><a href="/entry/entries"><button type="button" class="btn btn-info btn-xs m-b-10 m-l-5">Check Entry Records</button></a> <a href="/entry/submit_entry"><button type="button" class="btn btn-warning btn-xs m-b-10 m-l-5"><b>Add New Entry</b></button></a>
+                                                    <br>
+
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+{% endblock %}
+
+

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n  static %}
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans " Profile | TIN-CENTER ASOKWA" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Entry</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Entry</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                     <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                        <div class="col-md-10">
+                                            <ul>
+                                                {% if user_profile %}
+                                                <p><a href="{% url 'profiles:update' pk=user.id %}"class="btn warn">Update my Profile</a></p>
+                                                <p><a href="/accounts/password/change/"class="btn warn">Change Password</a></p>
+                                                {% else %}
+                                                <p>Welcome!</p>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="row">
+                        <div class="col-lg-9">
+                            <div class="card">
+                                <div class="card-title">
+                          
+                                        DO IT
+
+
+                                </div>
+
+
+                            </div>
+                            <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                        
+
+                        </div>
+                    </div>
+
+                   
+                </div>
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+
+        </div>
+        <!-- End Page wrapper  -->
+
+{% endblock %}

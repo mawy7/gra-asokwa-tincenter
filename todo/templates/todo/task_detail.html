@@ -1,0 +1,157 @@
+{% extends "todo/base.html" %}
+
+{% block title %}Task:{{ task.title }}{% endblock %}
+
+{% block content %}
+
+
+            <!-- Bread crumb -->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Task Detail</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li><a href="/todo">Task</a></li>
+                                    <li class="active">Task Detail</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- End Bread crumb -->
+
+
+
+        <div class="content">
+            <div class="animated fadeIn">
+            <!--  Traffic  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card"> 
+                        <div class="card-header">
+                                <strong class="card-title">Task Detail</strong>
+                            </div>
+                        <div class="row"> 
+                            <div class="col-lg-8">
+                                <div class="card">
+
+                                  <div class="row">
+    <div class="col-sm-8">
+      <div class="row"><br><br><br>
+                                            <div class="col-md-6 col-xs-6 b-r"> <strong>Task</strong>
+                                                <br>
+                                                <p class="text-muted">{{ task.title }}</p>
+                                            </div>
+                                            <div class="col-md-8 col-xs-6 b-r"> <strong>Organization</strong>
+                                                <br>
+                                                <p class="text-muted">{{ task.organization }}</p>
+                                            </div>
+                                            <div class="col-md-8 col-xs-6 b-r"> <strong>Number of Files Assigned</strong>
+                                                <br>
+                                                <p class="text-muted">{{ task.no_of_assigned_task }}</p>
+                                            </div><br><br><br><br><br><br>
+                                            {% if task.supervisor_remark %}
+
+                                            <div class="card-content col-md-8">
+                                                <div class="alert alert-info alert-dismissible fade show">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <strong><font colour="green">Supervisor Remarks</font></strong>
+                                                <p class="text-muted">{{ task.supervisor_remark|safe|urlize|linebreaks }}</p>
+                                                </div> 
+                                            </div>
+                                            {% endif %}
+                                        </div>
+    </div>
+
+    <div class="col-sm-4">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% if user.is_superuser %}
+            <button class="btn btn-sm btn-primary" id="EditTaskButton" type="button"
+            data-toggle="collapse" data-target="#AddEditTask">Edit Task</button>
+
+            <a href="{% url "todo:task_toggle_done" task.id %}" class="btn btn-info btn-sm">
+              {% if task.completed %} Mark Not Done {% else %} Mark Done {% endif %}
+            </a>
+            <a href="{% url "todo:delete_task" task.id %}" class="btn btn-danger btn-sm">Delete</a>
+            {% else %}
+              <a href="{% url "todo:task_toggle_done" task.id %}" class="btn btn-info btn-sm">
+              {% if task.completed %} Mark Not Done {% else %} Mark Done {% endif %}
+            </a>
+            {% endif %}
+          </form>
+        </li>
+        <li class="list-group-item">
+          <strong>Assigned to:</strong>
+          {% if task.assigned_to %} {{ task.assigned_to.get_full_name }} {% else %} Anyone {% endif %}
+        </li>
+        <li class="list-group-item">
+          <strong>Assigned by:</strong> {{ task.created_by.get_full_name }}
+        </li>
+        <li class="list-group-item">
+          <strong>Due date:</strong> {{ task.due_date }}
+        </li>
+        
+        {% if task.completed %}
+          <li class="list-group-item">
+            <strong>Completed on:</strong> {{ task.completed_date}}
+          </li>
+        {% else %}
+          <li class="list-group-item">
+            <strong>Completed:</strong> {{ task.completed|yesno:"Yes,No" }}
+          </li>
+        {% endif %}
+          
+        <li class="list-group-item">
+          <strong>In list:</strong>
+          <a href="{% url 'todo:list_detail' task.task_list.id task.task_list.slug %}">
+            {{ task.task_list }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="TaskEdit">
+    {# Task edit / new task form #}
+    {% include 'todo/include/task_edit.html' %}
+  </div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card-body">  
+                                    <!-- <h4 class="box-title">Chandler</h4> -->
+                                    <div class="calender-cont widget-calender">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- /.row --> 
+                        <div class="card-body"></div>
+                    </div> 
+                </div><!-- /# column -->
+            </div>
+            <!--  Traffic  End -->
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
